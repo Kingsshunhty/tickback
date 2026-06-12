@@ -10,13 +10,14 @@ import {
 import { challenges } from "../utils/challenges.js";
 
 import { db, auth } from "../firebase.js";
+import { EXPECTED_ORIGIN, RP_ID } from "../config.js";
 
 const router = Router();
 
 router.post("/options", async (req, res) => {
   try {
     const options = await generateAuthenticationOptions({
-      rpID: "localhost",
+      rpID: RP_ID,
       userVerification: "preferred",
     });
 
@@ -60,9 +61,9 @@ router.post("/verify", async (req, res) => {
 
       expectedChallenge: challenges.get(challengeId),
 
-      expectedOrigin: "http://localhost:5173",
+      expectedOrigin: EXPECTED_ORIGIN,
 
-      expectedRPID: "localhost",
+      expectedRPID: RP_ID,
 
       credential: {
         id: passkey.credentialID,

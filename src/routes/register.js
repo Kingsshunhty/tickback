@@ -5,6 +5,12 @@ import {
   verifyRegistrationResponse,
 } from "@simplewebauthn/server";
 
+import {
+  RP_NAME,
+  RP_ID,
+  EXPECTED_ORIGIN
+} from "../config.js";
+
 import { challenges } from "../utils/challenges.js";
 import { db } from "../firebase.js";
 
@@ -15,9 +21,9 @@ router.post("/options", async (req, res) => {
     const { uid, email } = req.body;
 
     const options = await generateRegistrationOptions({
-      rpName: "TickOnt",
+      rpName: RP_NAME,
 
-      rpID: "localhost",
+      rpID: RP_ID,
 
       userID: new TextEncoder().encode(uid),
 
@@ -54,9 +60,9 @@ router.post("/verify", async (req, res) => {
 
       expectedChallenge,
 
-      expectedOrigin: "http://localhost:5173",
+      expectedOrigin: EXPECTED_ORIGIN,
 
-      expectedRPID: "localhost",
+      expectedRPID: RP_ID,
 
       requireUserVerification: true,
     });

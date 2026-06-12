@@ -4,6 +4,10 @@ import cors from "cors";
 import registerRoutes from "./routes/register.js";
 import loginRoutes from "./routes/login.js";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const app = express();
 
 app.use(
