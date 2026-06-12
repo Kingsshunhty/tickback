@@ -8,6 +8,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const PORT = process.env.PORT || 3000
+
 const app = express();
 
 app.use(
@@ -31,6 +33,6 @@ app.get("/", (_, res) => {
   res.send("Passkey API Running");
 });
 
-app.listen(3000, () => {
-  console.log("Running on port 3000");
+app.listen(PORT, () => {
+  console.log(`"Running..."`);
 });
