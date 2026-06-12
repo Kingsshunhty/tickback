@@ -55,14 +55,6 @@ router.post("/verify", async (req, res) => {
 
     const uid = passkey.uid;
 
-    if (!passkeyData) {
-      return res.status(404).json({
-        error: "Passkey not found",
-      });
-    }
-
-    const { uid, passkey } = passkeyData;
-
     const verification = await verifyAuthenticationResponse({
       response: authenticationResponse,
 
