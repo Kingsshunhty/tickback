@@ -5,11 +5,13 @@ import {
   verifyRegistrationResponse,
 } from "@simplewebauthn/server";
 
-import {
-  RP_NAME,
-  RP_ID,
-  EXPECTED_ORIGIN
-} from "../config.js";
+import dotenv from "dotenv"
+
+import { RP_NAME, RP_ID, EXPECTED_ORIGIN } from "../config.js";
+
+dotenv.config()
+
+
 
 import { challenges } from "../utils/challenges.js";
 import { db } from "../firebase.js";
@@ -37,6 +39,11 @@ router.post("/options", async (req, res) => {
       },
     });
 
+    console.log({
+  RP_NAME,
+  RP_ID,
+});
+
     challenges.set(uid, options.challenge);
 
     res.json(options);
@@ -51,7 +58,7 @@ router.post("/options", async (req, res) => {
 
 router.post("/verify", async (req, res) => {
   try {
-    const { uid, registrationResponse } = req.body;
+    const { uid, registrationResponse, deviceName } = req.body;
 
     const expectedChallenge = challenges.get(uid);
 
@@ -80,6 +87,8 @@ router.post("/verify", async (req, res) => {
         counter: credential.counter,
 
         transports: credential.transports,
+
+        deviceName: deviceName || "Unknown Device",
 
         createdAt: new Date(),
       };
